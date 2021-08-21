@@ -1,7 +1,6 @@
 @charset "UTF-8";
 /*============================================================================
   Debut | Built with Shopify Slate
-
   Some things to know about this file:
     - Sass is compiled on Shopify's server so you don't need to convert it to CSS yourself
     - The output CSS is compressed and comments are removed
@@ -12,13 +11,11 @@
 /*============================================================================
   Prefix mixin for generating vendor prefixes.
   Based on https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/addons/_prefixer.scss
-
   Usage:
     // Input:
     .element {
       @include prefix(transform, scale(1), ms webkit spec);
     }
-
     // Output:
     .element {
       -ms-transform: scale(1);
@@ -65,7 +62,6 @@
 /*================ VENDOR ================*/
 /*============================================================================
   Slick Slider 1.6.0
-
   - If upgrading Slick's styles, use the following variables/functions
     instead of the slick defaults (from slick-theme.scss)
   - This file includes default slick.scss styles (at Slick Slider SCSS)
@@ -1430,6 +1426,27 @@ a[href^="tel"] {
   color: inherit; }
 
 /*================ Buttons ================*/
+.button {
+
+}
+
+.button:hover{
+  background-color: var(--color-body);
+}
+
+.fold::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  border-width: 10px 10px 0 0;
+  border-style: solid;
+}
+
+.fold--purple::after {
+  border-color: var(--color-purple-fold) var(--color-body) var(--color-body) var(--color-purple-fold);
+}
+
 .btn, .shopify-payment-button .shopify-payment-button__button--unbranded {
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1445,7 +1462,7 @@ a[href^="tel"] {
   vertical-align: middle;
   cursor: pointer;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 0;
   padding: 8px 15px;
   background-color: var(--color-btn-primary);
   color: var(--color-btn-primary-text);
@@ -1461,7 +1478,18 @@ a[href^="tel"] {
       padding: 10px 18px; } }
   .btn:not([disabled]):hover, .shopify-payment-button .shopify-payment-button__button--unbranded:not([disabled]):hover, .btn:focus, .shopify-payment-button .shopify-payment-button__button--unbranded:focus {
     color: var(--color-btn-primary-text);
-    background-color: var(--color-btn-primary-focus); }
+    background-color: var(--color-btn-primary-focus);
+
+    &.product-form__cart-submit--purple {
+      border: 1px solid var(--color-purple-fold);
+      color: var(--color-black);
+      background-color: var(--color-body);
+
+      .fold--purple::after {
+        border-color: var(--color-purple-fold) var(--color-body) var(--color-body) var(--color-purple-fold);
+      }
+    }
+  }
   .btn .icon-arrow-right, .shopify-payment-button .shopify-payment-button__button--unbranded .icon-arrow-right,
   .btn .icon-arrow-left,
   .shopify-payment-button .shopify-payment-button__button--unbranded .icon-arrow-left {
@@ -2764,7 +2792,7 @@ hr {
   flex: 1 1 300px; }
 
 .product-form__item--no-variants {
-  max-width: 400px; }
+  max-width: 150px; }
 
 .product-form__item--payment-button {
   -ms-flex-preferred-size: 100%;
@@ -2836,14 +2864,13 @@ hr {
 
 .product-form__cart-submit, .shopify-payment-button .shopify-payment-button__button--unbranded {
   display: block;
+  position: relative;
   width: 100%;
   line-height: 1.4;
-  padding-left: 5px;
-  padding-right: 5px;
   white-space: normal;
   margin-top: 0;
   margin-bottom: 10px;
-  min-height: 44px; }
+  min-height: 30px; }
   .product-single--small-media .product-form__cart-submit, .product-single--small-media .shopify-payment-button .shopify-payment-button__button--unbranded, .shopify-payment-button .product-single--small-media .shopify-payment-button__button--unbranded,
   .product-single--full-media .product-form__cart-submit,
   .product-single--full-media .shopify-payment-button .shopify-payment-button__button--unbranded,
@@ -2853,6 +2880,10 @@ hr {
     -ms-flex: 50%;
     flex: 50%;
     margin-right: 10px; }
+
+.product-form__cart-submit--purple {
+  background-color: var(--color-purple);
+}
 
 .product-single--small-media .shopify-payment-button,
 .product-single--full-media .shopify-payment-button {
@@ -4883,7 +4914,6 @@ hr {
 
 /*============================================================================
   Hero slider
-
   Extends default slick slider styles.
   Extra specificity in selectors is used to override defaults.
 ==============================================================================*/
@@ -6996,3 +7026,49 @@ hr {
 
 .store-availability-list__phone {
   margin-bottom: 0; }
+
+
+.button:not([disabled]):hover {
+  &__cart {
+    border: 1px solid var(--color-purple-fold);
+    color: var(--color-black);
+    background-color: var(--color-body);
+
+    .fold--purple::after {
+      border-color: var(--color-purple-fold) var(--color-body) var(--color-body) var(--color-purple-fold);
+    }
+  }
+}
+
+.button {
+  @extend .btn;
+  max-width: 150px;
+  border-radius: 0;
+
+  &:hover {
+    color: var(--color-black) !important;
+    background-color: var(--color-body) !important;
+    border: 1px solid var(--color-purple);
+  }
+}
+
+.button--purple {
+  background-color: var(--color-purple);
+}
+
+.fold::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  border-width: 10px 10px 0 0;
+  border-style: solid;
+
+  ::after {
+    border-color: var(--color-purple-fold) var(--color-body) var(--color-body) var(--color-purple-fold);
+  }
+}
+
+.button__cart {
+  @extend .product-form__cart-submit;
+}

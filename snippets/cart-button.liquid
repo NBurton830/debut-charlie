@@ -1,0 +1,51 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<button type="submit" name="add"
+    {% unless current_variant.available %} aria-disabled="true"{% endunless %}
+    aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
+    class="button button--purple button__cart"
+    {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
+    data-id="{{ current_variant }}" onclick='handleClick()'>
+  <span class="fold fold--purple">
+    {% unless current_variant.available %}
+      {{ 'products.product.sold_out' | t }}
+    {% else %}
+      {{ 'products.product.add_to_cart' | t }}
+    {% endunless %}
+  </span>
+</button>
+
+<script>
+  const handleClick = (e) => {
+    console.log(this);
+    var id = document.querySelectorAll("[data-id]").getAttribute('data-id');
+    let formData = {
+      'items': [{
+       'id': id,
+       'quantity': 1
+       }]
+     };
+     
+      fetch('/cart/add.js', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(function(json) {
+        console.log(json)
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+</script>
+
+ 
