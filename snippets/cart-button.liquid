@@ -5,7 +5,7 @@
     aria-label="{% unless current_variant.available %}{{ 'products.product.sold_out' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endunless %}"
     class="button button--purple button__cart"
     {% if settings.enable_ajax %}aria-haspopup="dialog"{% endif %}
-    data-id="{{ current_variant }}" onclick='handleClick()'>
+    id="{{ current_variant.id }}" onclick='handleClick(this.id)'>
   <span class="fold fold--purple">
     {% unless current_variant.available %}
       {{ 'products.product.sold_out' | t }}
@@ -16,9 +16,7 @@
 </button>
 
 <script>
-  const handleClick = (e) => {
-    console.log(this);
-    var id = document.querySelectorAll("[data-id]").getAttribute('data-id');
+  const handleClick = (id) => {
     let formData = {
       'items': [{
        'id': id,
